@@ -18,7 +18,7 @@ from io import StringIO
 ## load_data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('Data/loan_approval.csv')
+    df = pd.read_csv('..Data/loan_approval.csv')
     return df
 
 ## explore_categorical (Copied from LP)
@@ -84,7 +84,8 @@ buffer = StringIO()
 df.info(buf=buffer)
 info_text = buffer.getvalue()
 
-## Title and Markdown subheader
+## Image, title and Markdown subheader
+st.image('../Images/money_tree.jpg')
 st.title('Loan Approval Dataset')
 st.markdown("Data gathered from [Kaggle](https://www.kaggle.com/datasets/architsharma01/loan-approval-prediction-dataset)")
 
@@ -97,18 +98,19 @@ st.subheader('Dataframe Summary')
 st.text(info_text)
 
 ## Descriptive Statistics
-st.subheader('Would you like to see descriptive statistics?')
+st.sidebar.subheader('Show Descriptive Statistics')
 
 ## Button for Statistics
-if st.button('Descriptive Statistics'):
+show_stats = st.sidebar.button('Descriptive Statistics')
+if show_stats:
     describe = df.describe()
     st.dataframe(describe)
 
 ## Eda Plots
-st.subheader('Please choose a column to explore')
+st.sidebar.subheader('Explore a Column')
 
 ## selectbox for columns
-eda_column = st.selectbox('Column to Explore', columns, index=None)
+eda_column = st.sidebar.selectbox('Column to Explore', columns, index=None)
 
 ## Conditional: if column was chosen
 if eda_column:

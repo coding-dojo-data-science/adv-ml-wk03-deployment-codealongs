@@ -15,11 +15,13 @@ from io import StringIO
 
 ## Functions
 
-## load_data() with caching
+## load_data
+@st.cache_data
+def load_data():
+    df = pd.read_csv('../Data/loan_approval.csv')
+    return df
 
-## TODO
-
-## explore_categorical() (Copied from LP)
+## explore_categorical (Copied from LP)
 def explore_categorical(df, x, fillna = True, placeholder = 'MISSING',
                         figsize = (6,4), order = None):
  
@@ -46,7 +48,7 @@ def explore_categorical(df, x, fillna = True, placeholder = 'MISSING',
     
   return fig
 
-## explore_numeric() (Copied from LP)
+## explore_numeric (Copied from LP)
 def explore_numeric(df, x, figsize=(6,5) ):
   # Making our figure with gridspec for subplots
   gridspec = {'height_ratios':[0.7,0.3]}
@@ -72,54 +74,53 @@ def explore_numeric(df, x, figsize=(6,5) ):
 ## Global Variables
 
 ## Data
-
-## TODO
+df = load_data()
 
 ## Columns for EDA
+columns = df.columns
 
-## TODO
+## .info()
+buffer = StringIO()
+df.info(buf=buffer)
+info_text = buffer.getvalue()
 
-## Get string for .info()
+## Image, title and Markdown subheader
+st.image('../Images/money_tree.jpg')
+st.title('Loan Approval Dataset')
+st.markdown("Data gathered from [Kaggle](https://www.kaggle.com/datasets/architsharma01/loan-approval-prediction-dataset)")
 
-## TODO
+## DataFrame
+st.header('Loan Approval DataFrame')
+st.dataframe(df)
 
-## Title and Markdown subheader
+## info
+st.subheader('Dataframe Summary')
+st.text(info_text)
 
-## TODO
-
-## Display DataFrame
-
-## TODO
-
-## Display .info()
-
-## TODO
-
-## Descriptive Statistics Subheader
-
-## TODO
+## Descriptive Statistics
+st.sidebar.subheader('Show Descriptive Statistics')
 
 ## Button for Statistics
+show_stats = st.sidebar.button('Descriptive Statistics')
+if show_stats:
+    describe = df.describe()
+    st.dataframe(describe)
 
-## TODO
-
-## Eda Plots subheader
-
-## TODO
+## Eda Plots
+st.sidebar.subheader('Explore a Column')
 
 ## selectbox for columns
-
-## TODO
+eda_column = st.sidebar.selectbox('Column to Explore', columns, index=None)
 
 ## Conditional: if column was chosen
-
-## TODO
-
+if eda_column:
     ## Check if column is object or numeric and use appropriate plot function
-
-    ## TODO
+    if df[eda_column].dtype == 'object':
+        fig = explore_categorical(df, eda_column)
+    else:
+        fig = explore_numeric(df, eda_column)
 
     ## Show plot
-    
-    ## TODO
+    st.subheader(f'Display Descriptive Plots for {eda_column}')
+    st.pyplot(fig)
     

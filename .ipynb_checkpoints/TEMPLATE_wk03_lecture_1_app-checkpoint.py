@@ -83,7 +83,7 @@ def explore_numeric(df, x, figsize=(6,5) ):
 
 ## TODO
 
-## Title and Markdown subheader
+## Image, title and Markdown subheader
 
 ## TODO
 
