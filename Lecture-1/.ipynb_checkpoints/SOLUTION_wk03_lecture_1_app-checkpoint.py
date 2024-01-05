@@ -12,11 +12,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from io import StringIO
+import plotly.express as px
+import plotly.io as pio
 
 ## Functions
 
 ## load_data
-@st.cache_data
+# @st.cache_data
 def load_data():
     df = pd.read_csv('../Data/loan_approval.csv')
     return df
@@ -71,6 +73,22 @@ def explore_numeric(df, x, figsize=(6,5) ):
   print(f"- NaN's Found: {null_count} ({round(null_perc,2)}%)")
   return fig
 
+def plotly_numeric_vs_target(df, x, y, trendline='ols',add_hoverdata=True):
+    if add_hoverdata == True:
+        hover_data = list(df.columns)
+    else: 
+        hover_data = None
+        
+    pfig = px.scatter(df, x=x, y=y,width=800, height=600,
+                     hover_data=hover_data,
+                      trendline=trendline,
+                      trendline_color_override='red',
+                     title=f"{x} vs. {y}")
+    
+    pfig.update_traces(marker=dict(size=3),
+                      line=dict(dash='dash'))
+    return pfig
+
 ## Global Variables
 
 ## Data
@@ -78,6 +96,8 @@ df = load_data()
 
 ## Columns for EDA
 columns = df.columns
+features = [col for col in columns if col != 'loan_status']
+target = 'loan_status'
 
 ## .info()
 buffer = StringIO()
@@ -94,8 +114,10 @@ st.header('Loan Approval DataFrame')
 st.dataframe(df)
 
 ## info
-st.subheader('Dataframe Summary')
-st.text(info_text)
+st.sidebar.subheader('Show Dataframe Summary')
+summary_text = st.sidebar.button('Summary Text')
+if summary_text:
+    st.text(info_text)
 
 ## Descriptive Statistics
 st.sidebar.subheader('Show Descriptive Statistics')
@@ -123,4 +145,22 @@ if eda_column:
     ## Show plot
     st.subheader(f'Display Descriptive Plots for {eda_column}')
     st.pyplot(fig)
+
+## OPTIONAL Feature vs Target
+
+feature_vs_target = st.sidebar.selectbox('Compare Feature to Target', features, index=None)
+
+if feature_vs_target:
+    if df[feature_vs_target].dtype == 'object':
+        comparison = df.groupby('loan_status').count()
+        title = f'Count of {feature_vs_target} by {target}'
+    else:
+        comparison = df.groupby('loan_status').mean()
+        title = f'Mean {feature_vs_target} by {target}'
+    
+    pfig = px.bar(comparison, y=feature_vs_target, title=title)
+    st.plotly_chart(pfig)
+        
+    
+
     

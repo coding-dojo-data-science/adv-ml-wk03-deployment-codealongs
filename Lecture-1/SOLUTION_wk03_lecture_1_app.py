@@ -12,11 +12,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from io import StringIO
+import plotly.express as px
+import plotly.io as pio
 
 ## Functions
 
 ## load_data
-@st.cache_data
+# @st.cache_data
 def load_data():
     df = pd.read_csv('../Data/loan_approval.csv')
     return df
@@ -78,11 +80,8 @@ df = load_data()
 
 ## Columns for EDA
 columns = df.columns
-
-## .info()
-buffer = StringIO()
-df.info(buf=buffer)
-info_text = buffer.getvalue()
+features = [col for col in columns if col != 'loan_status']
+target = 'loan_status'
 
 ## Image, title and Markdown subheader
 st.image('../Images/money_tree.jpg')
@@ -93,9 +92,17 @@ st.markdown("Data gathered from [Kaggle](https://www.kaggle.com/datasets/archits
 st.header('Loan Approval DataFrame')
 st.dataframe(df)
 
-## info
-st.subheader('Dataframe Summary')
-st.text(info_text)
+## .info()
+
+## Get info as text
+buffer = StringIO()
+df.info(buf=buffer)
+info_text = buffer.getvalue()
+
+st.sidebar.subheader('Show Dataframe Summary')
+summary_text = st.sidebar.button('Summary Text')
+if summary_text:
+    st.text(info_text)
 
 ## Descriptive Statistics
 st.sidebar.subheader('Show Descriptive Statistics')
@@ -123,4 +130,24 @@ if eda_column:
     ## Show plot
     st.subheader(f'Display Descriptive Plots for {eda_column}')
     st.pyplot(fig)
+
+## Feature vs Target
+
+feature_vs_target = st.sidebar.selectbox('Compare Feature to Target', features, index=None)
+
+if feature_vs_target:
+    ## Check if feature is numeric or object
+    if df[feature_vs_target].dtype == 'object':
+        comparison = df.groupby('loan_status').count()
+        title = f'Count of {feature_vs_target} by {target}'
+    else:
+        comparison = df.groupby('loan_status').mean()
+        title = f'Mean {feature_vs_target} by {target}'
+
+    ## Display appropriate comparison
+    pfig = px.bar(comparison, y=feature_vs_target, title=title)
+    st.plotly_chart(pfig)
+        
+    
+
     

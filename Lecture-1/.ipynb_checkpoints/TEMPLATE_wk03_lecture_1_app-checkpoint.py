@@ -79,15 +79,16 @@ def explore_numeric(df, x, figsize=(6,5) ):
 
 ## TODO
 
-## Get string for .info()
-
-## TODO
-
 ## Image, title and Markdown subheader
 
 ## TODO
 
 ## Display DataFrame
+
+## TODO
+
+## .info()
+## Get string for .info()
 
 ## TODO
 
@@ -123,3 +124,11 @@ def explore_numeric(df, x, figsize=(6,5) ):
     
     ## TODO
     
+## Feature vs Target
+
+## Create sidebar button
+
+    ## Check if feature is numeric or object
+
+
+    ## Display appropriate comparison
