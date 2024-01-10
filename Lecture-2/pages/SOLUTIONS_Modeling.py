@@ -5,11 +5,6 @@
 
 ## imports
 import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.pipeline import make_pipeline
-from sklearn.compose import make_column_selector
-from sklearn.metrics import classification_report, ConfusionMatrixDisplay
 import streamlit as st
 import streamlit.components.v1 as components
 import joblib
