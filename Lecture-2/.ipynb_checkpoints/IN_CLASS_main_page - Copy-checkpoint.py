@@ -2,8 +2,6 @@ import streamlit as st
 
 ## set_page_config
 
-st.set_page_config()
-
 ## TO DO
 
 ## Landing Page Text/images
