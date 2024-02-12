@@ -42,7 +42,7 @@ st.markdown("Data gathered from [Kaggle](https://www.kaggle.com/datasets/archits
 st.header('Loan Approval DataFrame')
 st.dataframe(df)
 
-## .info()
+# ## .info()
 
 ## Get info as text
 buffer = StringIO()
