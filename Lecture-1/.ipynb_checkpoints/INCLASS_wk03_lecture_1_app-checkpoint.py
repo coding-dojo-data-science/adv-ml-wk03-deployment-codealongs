@@ -17,13 +17,17 @@ import functions as fn
 
 
 ## load_data() with caching
+@st.cache_data
 
+def load_data():
+    df = pd.read_csv('../Data/loan_approval.csv')
+    return df
 ## TODO
 
 ## Global Variables
 
 ## Data
-
+df = load_data()
 ## TODO
 
 ## Columns for EDA
@@ -31,6 +35,8 @@ import functions as fn
 ## TODO
 
 ## Image, title and Markdown subheader
+st.image('../Images/money_tree.jpg')
+st.title('Loan Approval app')
 
 ## TODO
 
