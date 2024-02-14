@@ -66,3 +66,23 @@ def eval_classification(model, X_train, y_train, X_test, y_test, normalize='true
                                             display_labels=labels)
     axes[1].set_title('Training Matrix')
     return train_report, test_report, fig
+
+
+import os
+def create_directories_from_paths(nested_dict):
+    """OpenAI. (2023). ChatGPT [Large language model]. https://chat.openai.com 
+    Recursively create directories for file paths in a nested dictionary.
+    Parameters:
+    nested_dict (dict): The nested dictionary containing file paths.
+    """
+    for key, value in nested_dict.items():
+        if isinstance(value, dict):
+            # If the value is a dictionary, recurse into it
+            create_directories_from_paths(value)
+        elif isinstance(value, str):
+            # If the value is a string, treat it as a file path and get the directory path
+            directory_path = os.path.dirname(value)
+            # If the directory path is not empty and the directory does not exist, create it
+            if directory_path and not os.path.exists(directory_path):
+                os.makedirs(directory_path)
+                print(f"Directory created: {directory_path}")
