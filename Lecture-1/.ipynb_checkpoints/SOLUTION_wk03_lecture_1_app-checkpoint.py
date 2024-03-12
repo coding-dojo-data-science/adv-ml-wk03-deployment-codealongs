@@ -28,10 +28,7 @@ def load_data():
 ## Data
 df = load_data()
 
-## Columns for EDA
-columns = df.columns
-features = [col for col in columns if col != 'loan_status']
-target = 'loan_status'
+
 
 ## Image, title and Markdown subheader
 st.image('../Images/money_tree.jpg')
@@ -49,6 +46,7 @@ buffer = StringIO()
 df.info(buf=buffer)
 info_text = buffer.getvalue()
 
+#Display .info() with button trigger
 st.sidebar.subheader('Show Dataframe Summary')
 summary_text = st.sidebar.button('Summary Text')
 if summary_text:
@@ -65,6 +63,13 @@ if show_stats:
 
 ## Eda Plots
 st.sidebar.subheader('Explore a Column')
+
+
+## Columns for EDA
+columns = df.columns
+target = 'loan_status'
+features = [col for col in columns if col != target]
+
 
 ## selectbox for columns
 eda_column = st.sidebar.selectbox('Column to Explore', columns, index=None)
@@ -83,19 +88,19 @@ if eda_column:
 
 ## Feature vs Target
 
-feature_vs_target = st.sidebar.selectbox('Compare Feature to Target', features, index=None)
+feature = st.sidebar.selectbox('Compare Feature to Target', features, index=None)
 
-if feature_vs_target:
+if feature:
     ## Check if feature is numeric or object
-    if df[feature_vs_target].dtype == 'object':
+    if df[feature].dtype == 'object':
         comparison = df.groupby('loan_status').count()
-        title = f'Count of {feature_vs_target} by {target}'
+        title = f'Count of {feature} by {target}'
     else:
         comparison = df.groupby('loan_status').mean()
-        title = f'Mean {feature_vs_target} by {target}'
+        title = f'Mean {feature} by {target}'
 
     ## Display appropriate comparison
-    pfig = px.bar(comparison, y=feature_vs_target, title=title)
+    pfig = px.bar(comparison, y=feature, title=title)
     st.plotly_chart(pfig)
         
     

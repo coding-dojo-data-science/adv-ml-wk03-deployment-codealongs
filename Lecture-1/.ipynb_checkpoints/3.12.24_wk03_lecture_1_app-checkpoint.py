@@ -12,74 +12,61 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from io import StringIO
-import plotly as px
+import plotly.express as px
 import functions as fn
 
 
-## load_data() with caching
+## load_data() function with caching
 
-## TODO
 
-## Global Variables
+## Use function to load Data
 
-## Data
 
-## TODO
-
-## Columns for EDA
-
-## TODO
 
 ## Image, title and Markdown subheader
 
-## TODO
-
 ## Display DataFrame
 
-## TODO
+
 
 ## .info()
 ## Get string for .info()
 
-## TODO
 
-## Display .info()
+## Display .info() with button trigger
 
-## TODO
 
 ## Descriptive Statistics Subheader
 
-## TODO
 
 ## Button for Statistics
 
-## TODO
 
 ## Eda Plots subheader
 
-## TODO
+
+## Columns for EDA
+
+
 
 ## selectbox for columns
 
-## TODO
 
 ## Conditional: if column was chosen
 
-## TODO
-
     ## Check if column is object or numeric and use appropriate plot function
 
-    ## TODO
-
+    
     ## Show plot
-    
-    ## TODO
-    
-## Feature vs Target
 
-## Create sidebar button
+    
+## selectbox for features vs target
+
+
+## Conditional: if feature was chosen
 
     ## Check if feature is numeric or object
 
 
+    
     ## Display appropriate comparison
