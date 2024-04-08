@@ -19,11 +19,15 @@ import functions as fn
 ## load_data() function with caching
 
 
+
 ## Use function to load Data
 
 
 
 ## Image, title and Markdown subheader
+
+
+
 
 ## Display DataFrame
 
@@ -33,23 +37,36 @@ import functions as fn
 ## Get string for .info()
 
 
+
+
 ## Display .info() with button trigger
+
+
 
 
 ## Descriptive Statistics Subheader
 
 
+
+
 ## Button for Statistics
 
 
+
+
 ## Eda Plots subheader
+
+
 
 
 ## Columns for EDA
 
 
 
+
 ## selectbox for columns
+
+
 
 
 ## Conditional: if column was chosen
@@ -63,10 +80,16 @@ import functions as fn
 ## selectbox for features vs target
 
 
-## Conditional: if feature was chosen
+# ## Conditional: if feature was chosen
+# if feature:
+#     ## Check if feature is numeric or object
+#     if df[feature].dtype == 'object':
+#         comparison = df.groupby('loan_status').count()
+#         title = f'Count of {feature} by {target}'
+#     else:
+#         comparison = df.groupby('loan_status').mean()
+#         title = f'Mean {feature} by {target}'
 
-    ## Check if feature is numeric or object
-
-
-    
-    ## Display appropriate comparison
+#     ## Display appropriate comparison
+#     pfig = px.bar(comparison, y=feature, title=title)
+#     st.plotly_chart(pfig)
